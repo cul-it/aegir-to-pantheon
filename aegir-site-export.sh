@@ -34,7 +34,11 @@ echo "$MULTISITEROOT"
 TEMP="/tmp/aegir-site-export"
 TEMPDIR="${TEMP}/${TARGET_SITE}"
 EXPORTDIR="${TEMPDIR}/export"
-mkdir -p "$EXPORTDIR"
+if [ -d "$EXPORTDIR" ]; then
+  error_exit "Directory $EXPORTDIR already exists! Please remove it first."
+fi
+
+mkdir -p "$EXPORTDIR" || error_exit "Can't create $EXPORTDIR"
 sudo chown -R aegir:lib_web_dev_role "$TEMP"
 sudo chmod -R ug+rw "$TEMP"
 
