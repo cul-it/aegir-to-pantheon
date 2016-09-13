@@ -38,8 +38,7 @@ fi
 
 mkdir -p "$EXPORTDIR" || error_exit "Can't create $EXPORTDIR"
 mkdir -p "${EXPORTDIR}/assets/code"
-mkdir -p "${EXPORTDIR}/assets/files"
-mkdir -p "${EXPORTDIR}/assets/private/files"
+mkdir -p "${EXPORTDIR}/assets/files/private"
 sudo chgrp -R lib_web_dev_role "$TEMP"
 sudo chmod -R ug+rw "$TEMP"
 
