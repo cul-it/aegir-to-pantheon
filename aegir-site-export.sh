@@ -67,3 +67,8 @@ echo 'Copying the assets: files, private/files'
 rsync -avzq "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
 rsync -avzq "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
 
+# compress the exported data
+echo 'Compressing the whole export...'
+tar -zcvf "${TEMPDIR}/export.tar.gz" "${TEMPDIR}/export"
+
+
