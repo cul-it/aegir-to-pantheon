@@ -63,7 +63,7 @@ rsync -azq --exclude .htaccess "/libweb/sites/${TARGET_SITE}/drupal_files/" "${E
 
 # compress the files directory
 echo "Compressing files..."
-cd "$TEMPDIR"
+cd "$EXPORTDIR"
 tar -zcf files.tar.gz files || error_exit "Problem with tar of files."
 rm -rf files || error_exit "Can't remove files directory."
 
