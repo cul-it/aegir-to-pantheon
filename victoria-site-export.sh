@@ -61,6 +61,12 @@ echo 'Copying the assets: files, private/files...'
 rsync -azq --exclude .htaccess "${SITEROOT}/sites/default/files" "${EXPORTDIR}/" || error_exit "Problem moving files."
 rsync -azq --exclude .htaccess "/libweb/sites/${TARGET_SITE}/drupal_files/" "${EXPORTDIR}/files/private/" || error_exit "Problem moving private files."
 
+# compress the files directory
+echo "Compressing files..."
+cd "$TEMPDIR"
+tar -zcf files.tar.gz files || error_exit "Problem with tar of files."
+rm -rf files || error_exit "Can't remove files directory."
+
 # compress the exported data
 ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
 ARCHIVEPATH="${TEMPDIR}/${ARCHIVEFILE}"
