@@ -72,7 +72,8 @@ ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
 ARCHIVEPATH="${TEMPDIR}/${ARCHIVEFILE}"
 echo 'Compressing the whole export...'
 cd "$TEMPDIR"
-tar -zcf "${ARCHIVEFILE}" "${EXPORTDIRNAME}"
+tar -zcf "${ARCHIVEFILE}" "${EXPORTDIRNAME}" || error_exit "Problem with tar."
+rm -rf "${EXPORTDIR}" || error_exit "Can't remove ${EXPORTDIR}."
 echo "Export is stored here:"
 echo "$ARCHIVEPATH"
 
