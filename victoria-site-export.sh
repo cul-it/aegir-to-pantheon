@@ -37,8 +37,8 @@ if [ -d "$EXPORTDIR" ]; then
 fi
 
 mkdir -p "$EXPORTDIR" || error_exit "Can't create $EXPORTDIR"
-mkdir -p "${EXPORTDIR}/assets/code"
-mkdir -p "${EXPORTDIR}/assets/files/private"
+mkdir -p "${EXPORTDIR}/code"
+mkdir -p "${EXPORTDIR}/files/private"
 sudo chgrp -R lib_web_dev_role "$TEMP"
 sudo chmod -R ug+rw "$TEMP"
 
