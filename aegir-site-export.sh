@@ -64,8 +64,8 @@ rsync -azq --exclude='/drush' "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || er
 
 # copy the assets - files, private/files
 echo 'Copying the assets: files, private/files'
-rsync -avzq "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
-rsync -avzq "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
+rsync -azq --exclude='/.htaccess' "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
+rsync -azq --exclude='/.htaccess' "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
 
 # compress the exported data
 ARCHIVE="${TEMPDIR}/export.tar.gz"
