@@ -30,3 +30,11 @@ MULTISITEROOT=`sudo -u aegir drush sa "$TARGET_SITE_ALIAS" | grep site_path | cu
 echo "$SITEROOT"
 echo "$MULTISITEROOT"
 
+# create a temporary directory target for backup
+TEMP="/tmp/aegir-site-export"
+TEMPDIR="${TEMP}/${TARGET_SITE}"
+EXPORTDIR="${TEMPDIR}/export"
+mkdir -p "$EXPORTDIR"
+sudo chown -R aegir:lib_web_dev_role "$TEMP"
+sudo chmod -R ug+rw "$TEMP"
+
