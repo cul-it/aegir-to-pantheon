@@ -68,7 +68,10 @@ rsync -avzq "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Probl
 rsync -avzq "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
 
 # compress the exported data
+ARCHIVE="${TEMPDIR}/export.tar.gz"
 echo 'Compressing the whole export...'
-tar -zcvf "${TEMPDIR}/export.tar.gz" "${TEMPDIR}/export"
+tar -zcvf "${ARCHIVE}" "${EXPORTDIR}"
+echo "Export is stored here:"
+echo "$ARCHIVE"
 
 
