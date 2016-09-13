@@ -55,7 +55,7 @@ sudo -u aegir drush "$TARGET_SITE_ALIAS" sql-dump --ordered-dump --result-file="
 echo 'Converting multi-site to single site...'
 OLDNAME="sites/${TARGET_SITE}"
 NEWNAME="sites/default"
-sed -i.bak "s/${OLDNAME}/${NEWNAME}/g" ${DATABASE}
+sed -i.bak -e "s/${OLDNAME}/${NEWNAME}/g" "${DATABASE}"
 
 # copy the modules, themes, libraries
 echo 'Copying the code...'
