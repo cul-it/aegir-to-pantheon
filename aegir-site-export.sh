@@ -33,7 +33,8 @@ echo "$MULTISITEROOT"
 # create a temporary directory target for backup
 TEMP="/tmp/aegir-site-export"
 TEMPDIR="${TEMP}/${TARGET_SITE}"
-EXPORTDIR="${TEMPDIR}/export"
+EXPORTDIRNAME="export"
+EXPORTDIR="${TEMPDIR}/${EXPORTDIRNAME}"
 if [ -d "$EXPORTDIR" ]; then
   error_exit "Directory $EXPORTDIR already exists! Please remove it first."
 fi
