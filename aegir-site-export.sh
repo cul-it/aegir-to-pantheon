@@ -73,7 +73,7 @@ ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
 ARCHIVEPATH="${TEMPDIR}/${ARCHIVEFILE}"
 echo 'Compressing the whole export...'
 cd "$TEMPDIR"
-tar -zcvf "${ARCHIVEFILE}" "${EXPORTDIRNAME}"
+tar -zcf "${ARCHIVEFILE}" "${EXPORTDIRNAME}"
 echo "Export is stored here:"
 echo "$ARCHIVEPATH"
 
