@@ -10,8 +10,22 @@ Updated: 9/12/2016 jgr25
 
 ## Make a local git repo of the Pantheon site
 
-## Add drush command srv
+## Export your Drupal site
 
-## Make a local copy of your site's files
+### Exporting from Aegir
+*Note: if your site is on the production server, clone it and move the clone to lamp-stg. Run this export on the clone.*
+
+* ssh over to lamp-stg.library.cornell.edu
+* run this script with your site name:
+`
+/cul/data/aegir/scratch/aegir-to-pantheon/aegir-site-export.sh sitename.library.cornell.edu
+`
+* make note of where the export is stored:
+`
+/tmp/aegir-site-export/sitename.library.cornell.edu/export.tar.gz
+`
+
+### Exporting from Victorias
+* use a different script
 
 ## Replace local git repo's /sites/all with yours
