@@ -42,5 +42,9 @@ mkdir -p "$EXPORTDIR" || error_exit "Can't create $EXPORTDIR"
 sudo chown -R aegir:lib_web_dev_role "$TEMP"
 sudo chmod -R ug+rw "$TEMP"
 
+# clear site caches
+echo 'Clearing site cache...'
+sudo -u aegir drush "$TARGET_SITE_ALIAS" cache-clear
+
 # backup the site database
 sudo -u aegir drush "$TARGET_SITE_ALIAS" sql-dump --result-file="${EXPORTDIR}/database.sql"
