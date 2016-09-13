@@ -56,7 +56,7 @@ echo 'Converting multi-site to single site...'
 OLDNAME="sites/${TARGET_SITE}"
 NEWNAME="sites/default"
 echo "sed -i 's#${OLDNAME}#${NEWNAME}#g' ${DUMP_FILE_ABS}"
-sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}"
+sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
 
 # copy the modules, themes, libraries
 echo 'Copying the code...'
