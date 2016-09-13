@@ -44,7 +44,7 @@ sudo chmod -R ug+rw "$TEMP"
 
 # clear site caches
 echo 'Clearing site cache...'
-sudo -u aegir drush "$TARGET_SITE_ALIAS" cache-clear
+sudo -u aegir drush "$TARGET_SITE_ALIAS" cache-clear all
 
 # backup the site database
 echo 'Backing up database...'
