@@ -60,7 +60,7 @@ sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem repla
 
 # copy the modules, themes, libraries
 echo 'Copying the code: modules, themes, libraries...'
-rsync -avzq "${SITEROOT}/sites/all" "${EXPORTDIR}/code" || error_exit "Problem copying code."
+rsync -avzq "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
 
 # copy the assets - files, private/files
 echo 'Copying the assets: files, private/files'
