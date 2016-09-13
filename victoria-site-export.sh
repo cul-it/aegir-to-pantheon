@@ -58,8 +58,8 @@ rsync -azq --exclude /drush "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || erro
 
 # copy the assets - files, private/files
 echo 'Copying the assets: files, private/files...'
-rsync -azq --exclude .htaccess "${SITEROOT}/sites/default/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
-rsync -azq --exclude .htaccess "/libweb/sites/${TARGET_SITE}/drupal_files/" "${EXPORTDIR}/assets/private/files/" || error_exit "Problem moving private files."
+rsync -azq --exclude .htaccess "${SITEROOT}/sites/default/files" "${EXPORTDIR}/" || error_exit "Problem moving files."
+rsync -azq --exclude .htaccess "/libweb/sites/${TARGET_SITE}/drupal_files/" "${EXPORTDIR}/files/private/" || error_exit "Problem moving private files."
 
 # compress the exported data
 ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
