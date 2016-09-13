@@ -47,4 +47,7 @@ echo 'Clearing site cache...'
 sudo -u aegir drush "$TARGET_SITE_ALIAS" cache-clear
 
 # backup the site database
-sudo -u aegir drush "$TARGET_SITE_ALIAS" sql-dump --result-file="${EXPORTDIR}/database.sql"
+echo 'Backing up database...'
+DATABASE="${EXPORTDIR}/database.sql"
+sudo -u aegir drush "$TARGET_SITE_ALIAS" sql-dump --ordered-dump --result-file="${DATABASE}"
+
