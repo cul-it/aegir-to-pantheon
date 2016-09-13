@@ -59,5 +59,7 @@ echo "sed -i 's#${OLDNAME}#${NEWNAME}#g' ${DUMP_FILE_ABS}"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
 
 # copy the modules, themes, libraries
-echo 'Copying the code...'
+echo 'Copying the code: modules, themes, libraries...'
+rsync -avz "${SITEROOT}/sites/all" "${EXPORTDIR}/code" || error_exit "Problem copying code."
+
 
