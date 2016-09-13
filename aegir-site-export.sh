@@ -61,12 +61,12 @@ sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem repla
 
 # copy the modules, themes, libraries
 echo 'Copying the code: modules, themes, libraries...'
-rsync -azq --exclude='/drush' "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
+rsync -azq --exclude /all/drush "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
 
 # copy the assets - files, private/files
 echo 'Copying the assets: files, private/files'
-rsync -azq --exclude='/.htaccess' "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
-rsync -azq --exclude='/.htaccess' "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
+rsync -azq --exclude .htaccess "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
+rsync -azq --exclude .htaccess "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
 
 # compress the exported data
 ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
