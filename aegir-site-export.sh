@@ -69,10 +69,12 @@ rsync -azq --exclude='/.htaccess' "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/
 rsync -azq --exclude='/.htaccess' "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
 
 # compress the exported data
-ARCHIVE="${TEMPDIR}/export.tar.gz"
+ARCHIVEFILE='${EXPORTDIRNAME}.tar.gz'
+ARCHIVEPATH="${TEMPDIR}/${ARCHIVEFILE}"
 echo 'Compressing the whole export...'
-tar -zcvf "${ARCHIVE}" "${EXPORTDIR}"
+cd "$TEMPDIR"
+tar -zcvf "${ARCHIVEFILE}" "${EXPORTDIRNAME}"
 echo "Export is stored here:"
-echo "$ARCHIVE"
+echo "$ARCHIVEPATH"
 
 
