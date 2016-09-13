@@ -38,3 +38,5 @@ mkdir -p "$EXPORTDIR"
 sudo chown -R aegir:lib_web_dev_role "$TEMP"
 sudo chmod -R ug+rw "$TEMP"
 
+# backup the site database
+sudo -u aegir drush "$TARGET_SITE_ALIAS" sql-dump --result-file="${EXPORTDIR}/database.sql"
