@@ -90,5 +90,3 @@ tar -zcf "${ARCHIVEFILE}" "${EXPORTDIRNAME}" || error_exit "Problem with tar."
 rm -rf "${EXPORTDIR}" || error_exit "Can't remove ${EXPORTDIR}."
 echo "Export is stored here:"
 echo "$ARCHIVEPATH"
-
-
