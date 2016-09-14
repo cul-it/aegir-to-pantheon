@@ -46,6 +46,12 @@ sudo chmod -R ug+rw "$TEMP"
 echo 'Clearing site cache...'
 drush "$TARGET_SITE_ALIAS" cache-clear all
 
+# make a drush archive dump of the site
+drush "$TARGET_SITE_ALIAS" archive-dump --destnation="${EXPORTDIR}/archive.tar" || error_exit "Problem making drush archive."
+
+# if the archive dump is < 500mb we can use it
+error_exit 'quitting here.'
+
 
 # backup the site database
 echo 'Backing up database...'
