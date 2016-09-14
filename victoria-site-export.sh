@@ -56,8 +56,8 @@ drush "$TARGET_SITE_ALIAS" sql-dump --ordered-dump --result-file="${DATABASE}"
 echo 'Copying the code: modules, themes, libraries...'
 rsync -azq --exclude /drush "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
 
-# copy the assets - files, private/files
-echo 'Copying the assets: files, private/files...'
+# copy the assets - files, private files
+echo 'Copying the assets: files, private files...'
 rsync -azq --exclude .htaccess "${SITEROOT}/sites/default/files" "${EXPORTDIR}/" || error_exit "Problem moving files."
 rsync -azq --exclude .htaccess "/libweb/sites/${TARGET_SITE}/drupal_files/" "${EXPORTDIR}/files/private/" || error_exit "Problem moving private files."
 
