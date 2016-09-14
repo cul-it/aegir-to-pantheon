@@ -1,5 +1,6 @@
 #!/bin/bash
 # upload-files.sh - upload file archive to Pantheon
+# see https://pantheon.io/docs/rsync-and-sftp/
 
 TARGET_SITE="$1"
 TARGET_SITE_ALIAS="@${TARGET_SITE}"
