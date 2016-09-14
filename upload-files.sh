@@ -39,7 +39,7 @@ fi
 
 while [ 1 ]
 do
-sshpass -p "$PASSWORD" rsync --partial -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222' "${FILES}/*" --temp-dir=../tmp/ $ENV.$SITE@appserver.$ENV.$SITE.drush.in:files/
+ssh rsync --partial -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222' "${FILES}/*" --temp-dir=../tmp/ $ENV.$SITE@appserver.$ENV.$SITE.drush.in:files/
 if [ "$?" = "0" ] ; then
 echo "rsync completed normally"
 exit
