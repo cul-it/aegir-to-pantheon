@@ -27,6 +27,8 @@ fi
 # find the path to the site and the multi-site directories
 SITEROOT=`drush sa "$TARGET_SITE_ALIAS" | grep root | cut -f4 -d\'`
 
+PRIVATEFILESPATH="/libweb/sites/${TARGET_SITE}/drupal_files/"
+
 # create a temporary directory target for backup
 TEMP="/tmp/victoria-site-export"
 TEMPDIR="${TEMP}/${TARGET_SITE}"
@@ -46,8 +48,9 @@ sudo chmod -R ug+rw "$TEMP"
 echo 'Clearing site cache...'
 drush "$TARGET_SITE_ALIAS" cache-clear all
 
-# make a drush archive dump of the site
-drush "$TARGET_SITE_ALIAS" archive-dump --destination="${EXPORTDIR}/archive.tar" || error_exit "Problem making drush archive."
+# make a drush archive dump of the site, including private files path
+ARDFILE="${EXPORTDIR}/archive.tar"
+drush "$TARGET_SITE_ALIAS" archive-dump --tar-options="-r ${PRIVATEFILESPATH}" --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # if the archive dump is < 500mb we can use it
 error_exit 'quitting here.'
