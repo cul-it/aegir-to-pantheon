@@ -28,24 +28,7 @@ if [ $# -ne 2 ]; then
 fi
 
 
+export ENV='dev'
+export SITE="${TARGET_SITE}"
 
-ENV='dev'
-SITE="${TARGET_SITE}"
-
-read -sp "Your Pantheon Password: " PASSWORD
-if [[ -z "$PASSWORD" ]]; then
-echo "Whoops, need password"
-exit
-fi
-
-while [ 1 ]
-do
-ssh rsync --partial -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222' "${FILES}/*" --temp-dir=../tmp/ $ENV.$SITE@appserver.$ENV.$SITE.drush.in:files/
-if [ "$?" = "0" ] ; then
-echo "rsync completed normally"
-exit
-else
-echo "Rsync failure. Backing off and retrying..."
-sleep 180
-fi
-done
+rsync -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222' "${TARGET_SITE}/*" --temp-dir=../tmp/ $ENV.$SITE@appserver.$ENV.$SITE.drush.in:files/
