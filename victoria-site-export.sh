@@ -49,7 +49,7 @@ drush "$TARGET_SITE_ALIAS" cache-clear all
 FILESDIR="${SITEROOT}/sites/default/files"
 PRIVATEDIRSYMLINK="${FILESDIR}/private"
 if [ -d "$PRIVATEDIRSYMLINK" ]; then
-  error_exit "Private files directory already exists!"
+  error_exit "Private files directory already exists! $PRIVATEDIRSYMLINK"
 fi
 cd "$FILESDIR"
 ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
