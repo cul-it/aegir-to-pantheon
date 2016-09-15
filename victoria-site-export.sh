@@ -50,7 +50,7 @@ drush "$TARGET_SITE_ALIAS" cache-clear all
 
 # make a drush archive dump of the site, including private files path
 ARDFILE="${EXPORTDIR}/archive.tar"
-drush "$TARGET_SITE_ALIAS" archive-dump --tar-options="-r ${PRIVATEFILESPATH}" --destination="${ARDFILE}" || error_exit "Problem making drush archive."
+drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='$s' "${ARDFILE}"`
