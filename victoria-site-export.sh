@@ -76,3 +76,7 @@ echo "Uploade archive to Amazon S3"
 BUCKET="pantheon-imports"
 cd "$TEMP"
 aws s3 sync "${TARGET_SITE}" "s3:${BUCKET}" || "Problem with aws sync"
+
+# remove temp archive
+echo "Cleaning up temp archive..."
+rm -r "$EXPORTDIR"
