@@ -45,9 +45,22 @@ sudo chmod -R ug+rw "$TEMP"
 echo 'Clearing site cache...'
 drush "$TARGET_SITE_ALIAS" cache-clear all
 
-# make a drush archive dump of the site, including private files path
+# make symlink to private files in files directory (temporarily)
+FILESDIR="${SITEROOT}/sites/default/files"
+PRIVATEDIRSYMLINK="${FILESDIR}/private"
+if [ -d "$PRIVATEDIR" ]; then
+  error_exit "Private files directory already exists!"
+fi
+lm -s "$PRIVATEFILESPATH" "$PRIVATEDIRSYMLINK" || error_exit "Can not make symlink to private files"
+
+error_exit "quit $PRIVATEDIRSYMLINK"
+
+# make a drush archive dump of the site, including private files via the symlink
 ARDFILE="${EXPORTDIR}/archive.tar"
 drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
+
+# delete the temporary symlink
+rm "$PRIVATEDIRSYMLINK"
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
