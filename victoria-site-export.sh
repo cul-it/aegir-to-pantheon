@@ -46,6 +46,7 @@ echo 'Clearing site cache...'
 drush "$TARGET_SITE_ALIAS" cache-clear all
 
 # make symlink to private files in files directory (temporarily)
+echo "Linking in private files..."
 FILESDIR="${SITEROOT}/sites/default/files"
 PRIVATEDIRSYMLINK="${FILESDIR}/private"
 if [ -d "$PRIVATEDIRSYMLINK" ]; then
@@ -55,10 +56,12 @@ cd "$FILESDIR"
 ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
 
 # make a drush archive dump of the site, including private files via the symlink
+echo "Making site archive..."
 ARDFILE="${EXPORTDIR}/archive.tar.gz"
 drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # delete the temporary symlink
+echo "Unlinking private files..."
 rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATEDIRSYMLINK"
 
 # if the archive dump is < 500mb we can use it
@@ -69,6 +72,7 @@ if test $FILESIZE -ge "524288000"
 fi
 
 # upload to amazon s3
+echo "Uploade archive to Amazon S3"
 BUCKET="pantheon-imports"
 cd "$TEMP"
 aws s3 sync "${TARGET_SITE}" "s3:${BUCKET}" || "Problem with aws sync"
