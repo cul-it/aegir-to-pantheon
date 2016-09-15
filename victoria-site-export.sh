@@ -56,7 +56,7 @@ lm -s "$PRIVATEFILESPATH" "$PRIVATEDIRSYMLINK" || error_exit "Can not make symli
 error_exit "quit $PRIVATEDIRSYMLINK"
 
 # make a drush archive dump of the site, including private files via the symlink
-ARDFILE="${EXPORTDIR}/archive.tar"
+ARDFILE="${EXPORTDIR}/archive.tar.gz"
 drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # delete the temporary symlink
