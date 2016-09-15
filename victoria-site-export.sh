@@ -73,32 +73,3 @@ if test $FILESIZE -lt "524288000"
 fi
 error_exit "quit here"
 
-# backup the site database
-echo 'Backing up database...'
-DATABASE="${EXPORTDIR}/database.sql"
-drush "$TARGET_SITE_ALIAS" sql-dump --ordered-dump --result-file="${DATABASE}"
-
-# copy the modules, themes, libraries
-echo 'Copying the code: modules, themes, libraries...'
-rsync -azq --exclude /drush "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
-
-# copy the assets - files, private files
-echo 'Copying the assets: files, private files...'
-rsync -azq --exclude .htaccess "${SITEROOT}/sites/default/files" "${EXPORTDIR}/" || error_exit "Problem moving files."
-rsync -azq --exclude .htaccess "${PRIVATEFILESPATH}" "${EXPORTDIR}/files/private/" || error_exit "Problem moving private files."
-
-# compress the files directory
-echo "Compressing files..."
-cd "$EXPORTDIR"
-tar -zcf files.tar.gz files || error_exit "Problem with tar of files."
-rm -rf files || error_exit "Can't remove files directory."
-
-# compress the exported data
-ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
-ARCHIVEPATH="${TEMPDIR}/${ARCHIVEFILE}"
-echo 'Compressing the whole export...'
-cd "$TEMPDIR"
-tar -zcf "${ARCHIVEFILE}" "${EXPORTDIRNAME}" || error_exit "Problem with tar."
-rm -rf "${EXPORTDIR}" || error_exit "Can't remove ${EXPORTDIR}."
-echo "Export is stored here:"
-echo "$ARCHIVEPATH"
