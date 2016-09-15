@@ -53,8 +53,6 @@ if [ -d "$PRIVATEDIR" ]; then
 fi
 ln -s "$PRIVATEFILESPATH" "$PRIVATEDIRSYMLINK" || error_exit "Can not make symlink to private files"
 
-error_exit "quit $PRIVATEDIRSYMLINK"
-
 # make a drush archive dump of the site, including private files via the symlink
 ARDFILE="${EXPORTDIR}/archive.tar.gz"
 drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
@@ -71,5 +69,3 @@ if test $FILESIZE -lt "524288000"
   echo "${ARDFILE}"
   exit 0
 fi
-error_exit "quit here"
-
