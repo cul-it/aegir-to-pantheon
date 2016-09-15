@@ -54,7 +54,8 @@ drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='$s' "${ARDFILE}"`
-if test $FILESIZE -lt 524288000
+echo "Archive is $FILESIZE bytes."
+if test $FILESIZE -lt "524288000"
   then
   echo "Archive < 500 Mb so you can upload it directly. Path to drush archive file:"
   echo "${ARDFILE}"
