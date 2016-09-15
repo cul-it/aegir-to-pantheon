@@ -65,10 +65,7 @@ rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATE
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
-echo "Archive is $FILESIZE bytes."
-if test $FILESIZE -lt "524288000"
+if test $FILESIZE -ge "524288000"
   then
-  echo "Archive < 500 Mb so you can upload it directly. Path to drush archive file:"
-  echo "${ARDFILE}"
-  exit 0
+  echo "Warning: Archive > 500 Mb - you will need to upload it to Pantheon using the 'Manual Method'"
 fi
