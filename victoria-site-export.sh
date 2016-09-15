@@ -69,3 +69,8 @@ if test $FILESIZE -ge "524288000"
   then
   echo "Warning: Archive > 500 Mb - you will need to upload it to Pantheon using the 'Manual Method'"
 fi
+
+# upload to amazon s3
+BUCKET="pantheon-imports"
+cd "$TEMP"
+aws s3 sync "${TARGET_SITE}" "s3:${BUCKET}" || "Problem with aws sync"
