@@ -80,3 +80,8 @@ aws s3 sync "${TARGET_SITE}" "s3:${BUCKET}" || "Problem with aws sync"
 # remove temp archive
 echo "Cleaning up temp archive..."
 rm -r "$EXPORTDIR"
+
+echo "********************"
+echo "Archive stored here:"
+echo "https://s3.amazonaws.com/${bucket}/${TARGET_SITE}/archive.tar.gz"
+echo "********************"
