@@ -53,7 +53,7 @@ ARDFILE="${EXPORTDIR}/archive.tar"
 drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # if the archive dump is < 500mb we can use it
-FILESIZE=`stat --printf='$s' "${ARDFILE}"`
+FILESIZE=`stat --printf='%s' "${ARDFILE}"`
 echo "Archive is $FILESIZE bytes."
 if test $FILESIZE -lt "524288000"
   then
