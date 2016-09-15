@@ -32,15 +32,12 @@ PRIVATEFILESPATH="/libweb/sites/${TARGET_SITE}/drupal_files/"
 # create a temporary directory target for backup
 TEMP="/tmp/victoria-site-export"
 TEMPDIR="${TEMP}/${TARGET_SITE}"
-EXPORTDIRNAME="export"
-EXPORTDIR="${TEMPDIR}/${EXPORTDIRNAME}"
+EXPORTDIR="${TEMPDIR}"
 if [ -d "$EXPORTDIR" ]; then
   error_exit "Directory $EXPORTDIR already exists! Please remove it first."
 fi
 
 mkdir -p "$EXPORTDIR" || error_exit "Can't create $EXPORTDIR"
-mkdir -p "${EXPORTDIR}/code"
-mkdir -p "${EXPORTDIR}/files/private"
 sudo chgrp -R lib_web_dev_role "$TEMP"
 sudo chmod -R ug+rw "$TEMP"
 
