@@ -54,6 +54,7 @@ fi
 cd "$FILESDIR"
 ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
 
+error_exit "quitting $PRIVATEDIRSYMLINK"
 
 # make a drush archive dump of the site, including private files via the symlink
 ARDFILE="${EXPORTDIR}/archive.tar.gz"
