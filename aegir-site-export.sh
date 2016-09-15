@@ -56,6 +56,58 @@ OLDNAME="sites/${TARGET_SITE}"
 NEWNAME="sites/default"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
 
+# make symlink to private files in files directory (temporarily)
+echo "Linking in private files..."
+DEFAULTFILES="${SITEROOT}/sites/default"
+cd "${DEFAULTFILES}"
+if [ -d "files" ]; then
+  error_exit "Default files directory already exists in $DEFAULTFILES"
+fi
+FILESDIR="${MULTISITEROOT}/files"
+ln -s "${FILESDIR}" "files"
+PRIVATEDIRSYMLINK="${FILESDIR}/private/files"
+if [ -d "$PRIVATEDIRSYMLINK" ]; then
+  error_exit "Private files directory already exists! $PRIVATEDIRSYMLINK"
+fi
+cd "$FILESDIR"
+ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
+
+# make a drush archive dump of the site, including private files via the symlink
+echo "Making site archive..."
+ARDFILE="${EXPORTDIR}/archive.tar.gz"
+drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
+
+# delete the temporary symlink
+echo "Unlinking private files..."
+rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATEDIRSYMLINK"
+
+# if the archive dump is < 500mb we can use it
+FILESIZE=`stat --printf='%s' "${ARDFILE}"`
+if test $FILESIZE -ge "524288000"
+  then
+  echo "Warning: Archive > 500 Mb - you will need to upload it to Pantheon using the 'Manual Method'"
+fi
+
+# upload to amazon s3
+echo "Uploade archive to Amazon S3"
+command -v aws >/dev/null 2>&1 || error_exit "Problem: aws command is not installed."
+BUCKET="pantheon-imports"
+cd "$TEMP"
+aws s3 sync "${TARGET_SITE}" "s3:${BUCKET}" || "Problem with aws sync"
+
+# remove temp archive
+echo "Cleaning up temp archive..."
+rm -r "$EXPORTDIR"
+
+echo "********************"
+echo "Archive stored here:"
+echo "https://s3.amazonaws.com/${bucket}/${TARGET_SITE}/archive.tar.gz"
+echo "********************"
+
+
+
+
+*********************************
 # copy the modules, themes, libraries
 echo 'Copying the code: modules, themes, libraries...'
 rsync -azq --exclude /drush "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
