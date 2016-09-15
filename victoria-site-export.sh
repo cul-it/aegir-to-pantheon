@@ -48,7 +48,7 @@ drush "$TARGET_SITE_ALIAS" cache-clear all
 # make symlink to private files in files directory (temporarily)
 FILESDIR="${SITEROOT}/sites/default/files"
 PRIVATEDIRSYMLINK="${FILESDIR}/private"
-if [ -d "$PRIVATEDIR" ]; then
+if [ -d "$PRIVATEDIRSYMLINK" ]; then
   error_exit "Private files directory already exists!"
 fi
 ln -s "$PRIVATEFILESPATH" "$PRIVATEDIRSYMLINK" || error_exit "Can not make symlink to private files"
