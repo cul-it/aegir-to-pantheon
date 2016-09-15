@@ -51,7 +51,7 @@ PRIVATEDIRSYMLINK="${FILESDIR}/private"
 if [ -d "$PRIVATEDIR" ]; then
   error_exit "Private files directory already exists!"
 fi
-lm -s "$PRIVATEFILESPATH" "$PRIVATEDIRSYMLINK" || error_exit "Can not make symlink to private files"
+ln -s "$PRIVATEFILESPATH" "$PRIVATEDIRSYMLINK" || error_exit "Can not make symlink to private files"
 
 error_exit "quit $PRIVATEDIRSYMLINK"
 
