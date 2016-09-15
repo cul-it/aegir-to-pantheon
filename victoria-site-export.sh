@@ -73,6 +73,7 @@ fi
 
 # upload to amazon s3
 echo "Uploade archive to Amazon S3"
+command -v aws >/dev/null 2>&1 || error_exit "Problem: aws command is not installed."
 BUCKET="pantheon-imports"
 cd "$TEMP"
 aws s3 sync "${TARGET_SITE}" "s3:${BUCKET}" || "Problem with aws sync"
