@@ -31,4 +31,4 @@ fi
 export ENV='dev'
 export SITE="${TARGET_SITE}"
 
-rsync -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222' "${TARGET_SITE}/*" --temp-dir=../tmp/ $ENV.$SITE@appserver.$ENV.$SITE.drush.in:files/
+rsync -rlvz --size-only --ipv4 --progress --dry-run  -e 'ssh -p 2222' "${TARGET_SITE}/*" --temp-dir=../tmp/ $ENV.$SITE@appserver.$ENV.$SITE.drush.in:files/
