@@ -61,7 +61,7 @@ ARDFILE="${EXPORTDIR}/archive.tar.gz"
 drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # delete the temporary symlink
-rm "$PRIVATEDIRSYMLINK"
+rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATEDIRSYMLINK"
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
