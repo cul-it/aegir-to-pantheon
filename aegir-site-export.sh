@@ -31,8 +31,7 @@ MULTISITEROOT=`sudo -u aegir drush sa "$TARGET_SITE_ALIAS" | grep site_path | cu
 # create a temporary directory target for backup
 TEMP="/tmp/aegir-site-export"
 TEMPDIR="${TEMP}/${TARGET_SITE}"
-EXPORTDIRNAME="export"
-EXPORTDIR="${TEMPDIR}/${EXPORTDIRNAME}"
+EXPORTDIR="${TEMPDIR}"
 if [ -d "$EXPORTDIR" ]; then
   error_exit "Directory $EXPORTDIR already exists! Please remove it first."
 fi
