@@ -60,8 +60,8 @@ OLDNAME="sites/default/private/files"
 NEWNAME="sites/default/files/private"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
 
-# make symlink to private files in files directory (temporarily)
-echo "Linking in private files..."
+# make symlink to multisite files in files directory (temporarily)
+echo "Linking in multisite & private files..."
 DEFAULTFILES="${SITEROOT}/sites/default"
 cd "${DEFAULTFILES}"
 if [ -d "files" ]; then
@@ -75,6 +75,8 @@ if [ -d "$PRIVATEDIRSYMLINK" ]; then
 fi
 cd "$FILESDIR"
 ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
+
+error_exit "See if symlinks are setup: ${DEFAULTFILES}"
 
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
