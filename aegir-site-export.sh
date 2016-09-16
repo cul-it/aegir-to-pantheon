@@ -88,7 +88,7 @@ ln -s "${OLDBASE}/settings.php" settings.php || error_exit "Problem creating sym
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
 ARDFILE="${EXPORTDIR}/archive.tar.gz"
-sudo -u aegir drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
+sudo -u aegir drush "$TARGET_SITE_ALIAS" archive-dump default --no-core --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # reset permissions
 sudo chown -R aegir:lib_web_dev_role "$TEMP"
