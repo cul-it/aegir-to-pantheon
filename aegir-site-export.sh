@@ -77,11 +77,9 @@ if [ -d "files" ]; then
   error_exit "Default files directory already exists in ${NEWBASE}"
 fi
 cd "${OLDFILES}"
-ln -s "${OLDPRIVATE}" private
+ln -s "${OLDPRIVATE}" private || error_exit "Problem creating private files symlink"
 cd "${NEWBASE}"
-ln -s "${OLDFILES}" files
-
-error_exit "See if symlinks are setup: ${NEWBASE}"
+ln -s "${OLDFILES}" files || error_exit "Problem creating files symlink"
 
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
