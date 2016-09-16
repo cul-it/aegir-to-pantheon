@@ -55,6 +55,10 @@ echo 'Converting multi-site to single site...'
 OLDNAME="sites/${TARGET_SITE}"
 NEWNAME="sites/default"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
+echo 'Converting private files paths...'
+OLDNAME="sites/default/private/files"
+NEWNAME="sites/default/files/private"
+sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
 
 # make symlink to private files in files directory (temporarily)
 echo "Linking in private files..."
