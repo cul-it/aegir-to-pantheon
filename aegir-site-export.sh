@@ -90,6 +90,10 @@ echo "Making site archive..."
 ARDFILE="${EXPORTDIR}/archive.tar.gz"
 sudo -u aegir drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
+# reset permissions
+sudo chown -R aegir:lib_web_dev_role "$TEMP"
+sudo chmod -R ug+rw "$TEMP"
+
 # delete the temporary symlinks
 echo "Unlinking private files..."
 rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/private"
