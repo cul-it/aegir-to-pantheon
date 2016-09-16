@@ -94,6 +94,7 @@ drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit
 echo "Unlinking private files..."
 rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/private"
 rm "${NEWBASE}/files" || error_exit "Can not remove symlink ${NEWBASE}/files"
+rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/settings.php"
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
