@@ -31,8 +31,7 @@ MULTISITEROOT=`sudo -u aegir drush sa "$TARGET_SITE_ALIAS" | grep site_path | cu
 # create a temporary directory target for backup
 TEMP="/tmp/aegir-site-export"
 TEMPDIR="${TEMP}/${TARGET_SITE}"
-EXPORTDIRNAME="export"
-EXPORTDIR="${TEMPDIR}/${EXPORTDIRNAME}"
+EXPORTDIR="${TEMPDIR}"
 if [ -d "$EXPORTDIR" ]; then
   error_exit "Directory $EXPORTDIR already exists! Please remove it first."
 fi
@@ -47,7 +46,7 @@ sudo -u aegir drush "$TARGET_SITE_ALIAS" cache-clear all
 
 # backup the site database
 echo 'Backing up database...'
-DATABASE="${EXPORTDIR}/database.sql"
+DATABASE="${EXPORTDIR}/database-default-site.sql"
 sudo -u aegir drush "$TARGET_SITE_ALIAS" sql-dump --ordered-dump --result-file="${DATABASE}"
 
 # modify the backup database to make it non-multi-site
@@ -55,24 +54,72 @@ echo 'Converting multi-site to single site...'
 OLDNAME="sites/${TARGET_SITE}"
 NEWNAME="sites/default"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
+echo 'Converting private files paths...'
+OLDNAME="sites/default/private/files"
+NEWNAME="sites/default/files/private"
+sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
 
-# copy the modules, themes, libraries
-echo 'Copying the code: modules, themes, libraries...'
-rsync -azq --exclude /drush "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
+# make symlink to multisite files in files directory (temporarily)
+echo "Linking in multisite & private files..."
+OLDBASE="${MULTISITEROOT}"
+NEWBASE="${SITEROOT}/sites/default"
+OLDFILES="${OLDBASE}/files"
+NEWFILES="${NEWBASE}/files"
+OLDPRIVATE="${OLDBASE}/private/files"
+NEWPRIVATE="${NEWBASE}/files/private"
+DEFAULTFILES="${SITEROOT}/sites/default"
+cd "${OLDFILES}"
+if [ -d "private" ]; then
+  error_exit "Private files directory already exists! ${OLDFILES}"
+fi
+cd "${NEWBASE}"
+if [ -d "files" ]; then
+  error_exit "Default files directory already exists in ${NEWBASE}"
+fi
+if [ -f "settings.php" ]; then
+  error_exit "settings.php already exists in ${NEWBASE}"
+fi
+cd "${OLDFILES}"
+ln -s "${OLDPRIVATE}" private || error_exit "Problem creating private files symlink"
+cd "${NEWBASE}"
+ln -s "${OLDFILES}" files || error_exit "Problem creating files symlink"
+ln -s "${OLDBASE}/settings.php" settings.php || error_exit "Problem creating symlink for settings.php"
 
-# copy the assets - files, private/files
-echo 'Copying the assets: files, private/files...'
-rsync -azq --exclude .htaccess "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
-rsync -azq --exclude .htaccess "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
+# make a drush archive dump of the site, including private files via the symlink
+echo "Making site archive..."
+ARDFILE="${EXPORTDIR}/archive.tar.gz"
+sudo -u aegir drush "$TARGET_SITE_ALIAS" archive-dump default --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
-# compress the exported data
-ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
-ARCHIVEPATH="${TEMPDIR}/${ARCHIVEFILE}"
-echo 'Compressing the whole export...'
-cd "$TEMPDIR"
-tar -zcf "${ARCHIVEFILE}" "${EXPORTDIRNAME}" || error_exit "Problem with tar."
-rm -rf "${EXPORTDIR}" || error_exit "Can't remove ${EXPORTDIR}."
-echo "Export is stored here:"
-echo "$ARCHIVEPATH"
+# reset permissions
+sudo chown -R aegir:lib_web_dev_role "$TEMP"
+sudo chmod -R ug+rw "$TEMP"
 
+# delete the temporary symlinks
+echo "Unlinking multisite & private files..."
+rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/private"
+rm "${NEWBASE}/files" || error_exit "Can not remove symlink ${NEWBASE}/files"
+rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/settings.php"
+
+# if the archive dump is < 500mb we can use it
+FILESIZE=`stat --printf='%s' "${ARDFILE}"`
+if test $FILESIZE -ge "524288000"
+  then
+  echo "Warning: Archive > 500 Mb - you will need to upload it to Pantheon using the 'Manual Method'"
+fi
+
+# upload to amazon s3
+echo "Uploade archive to Amazon S3"
+command -v aws >/dev/null 2>&1 || error_exit "Problem: aws command is not installed."
+BUCKET="pantheon-imports"
+cd "$TEMP"
+aws s3 sync "${TARGET_SITE}" "s3://${BUCKET}/${TARGET_SITE}" || error_exit "Problem with aws sync"
+
+# remove temp archive
+echo "Cleaning up temp archive..."
+rm -r "$EXPORTDIR"
+
+echo "********************"
+echo "Archive stored here:"
+echo "https://s3.amazonaws.com/${BUCKET}/${TARGET_SITE}/archive.tar.gz"
+echo "********************"
 
