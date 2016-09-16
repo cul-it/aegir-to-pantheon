@@ -114,27 +114,3 @@ echo "Archive stored here:"
 echo "https://s3.amazonaws.com/${bucket}/${TARGET_SITE}/archive.tar.gz"
 echo "********************"
 
-
-
-
-*********************************
-# copy the modules, themes, libraries
-echo 'Copying the code: modules, themes, libraries...'
-rsync -azq --exclude /drush "${SITEROOT}/sites/all/" "${EXPORTDIR}/code" || error_exit "Problem copying code."
-
-# copy the assets - files, private/files
-echo 'Copying the assets: files, private/files...'
-rsync -azq --exclude .htaccess "${MULTISITEROOT}/files" "${EXPORTDIR}/assets/" || error_exit "Problem moving files."
-rsync -azq --exclude .htaccess "${MULTISITEROOT}/private" "${EXPORTDIR}/assets/" || error_exit "Problem moving private files."
-
-# compress the exported data
-ARCHIVEFILE="${EXPORTDIRNAME}.tar.gz"
-ARCHIVEPATH="${TEMPDIR}/${ARCHIVEFILE}"
-echo 'Compressing the whole export...'
-cd "$TEMPDIR"
-tar -zcf "${ARCHIVEFILE}" "${EXPORTDIRNAME}" || error_exit "Problem with tar."
-rm -rf "${EXPORTDIR}" || error_exit "Can't remove ${EXPORTDIR}."
-echo "Export is stored here:"
-echo "$ARCHIVEPATH"
-
-
