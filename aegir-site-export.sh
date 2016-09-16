@@ -95,7 +95,7 @@ sudo chown -R aegir:lib_web_dev_role "$TEMP"
 sudo chmod -R ug+rw "$TEMP"
 
 # delete the temporary symlinks
-echo "Unlinking private files..."
+echo "Unlinking multisite & private files..."
 rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/private"
 rm "${NEWBASE}/files" || error_exit "Can not remove symlink ${NEWBASE}/files"
 rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/settings.php"
