@@ -100,8 +100,6 @@ rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/priva
 rm "${NEWBASE}/files" || error_exit "Can not remove symlink ${NEWBASE}/files"
 rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/settings.php"
 
-error_exit "quit. ${ARDFILE}"
-
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
 if test $FILESIZE -ge "524288000"
