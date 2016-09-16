@@ -47,7 +47,7 @@ sudo -u aegir drush "$TARGET_SITE_ALIAS" cache-clear all
 
 # backup the site database
 echo 'Backing up database...'
-DATABASE="${EXPORTDIR}/database.sql"
+DATABASE="${EXPORTDIR}/database-default-site.sql"
 sudo -u aegir drush "$TARGET_SITE_ALIAS" sql-dump --ordered-dump --result-file="${DATABASE}"
 
 # modify the backup database to make it non-multi-site
