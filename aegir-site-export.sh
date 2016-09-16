@@ -76,10 +76,14 @@ cd "${NEWBASE}"
 if [ -d "files" ]; then
   error_exit "Default files directory already exists in ${NEWBASE}"
 fi
+if [ -f "settings.php" ]; then
+  error_exit "settings.php already exists in ${NEWBASE}"
+fi
 cd "${OLDFILES}"
 ln -s "${OLDPRIVATE}" private || error_exit "Problem creating private files symlink"
 cd "${NEWBASE}"
 ln -s "${OLDFILES}" files || error_exit "Problem creating files symlink"
+ln -s "${OLDBASE}/settings.php" settings.php || error_exit "Problem creating symlink for settings.php"
 
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
