@@ -88,7 +88,8 @@ drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit
 
 # delete the temporary symlinks
 echo "Unlinking private files..."
-rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATEDIRSYMLINK"
+rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/private"
+rm "${NEWBASE}/files" || error_exit "Can not remove symlink ${NEWBASE}/files"
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
