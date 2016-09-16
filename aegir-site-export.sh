@@ -61,6 +61,12 @@ sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem repla
 
 # make symlink to multisite files in files directory (temporarily)
 echo "Linking in multisite & private files..."
+OLDBASE="${MULTISITEROOT}"
+NEWBASE="${SITEROOT}/sites/default"
+OLDFILES="${OLDBASE}/files"
+NEWFILES="${NEWBASE}/files"
+OLDPRIVATE="${OLDBASE}/private/files"
+NEWPRIVATE="${NEWBASE}/files/private"
 DEFAULTFILES="${SITEROOT}/sites/default"
 cd "${DEFAULTFILES}"
 if [ -d "files" ]; then
