@@ -68,27 +68,27 @@ NEWFILES="${NEWBASE}/files"
 OLDPRIVATE="${OLDBASE}/private/files"
 NEWPRIVATE="${NEWBASE}/files/private"
 DEFAULTFILES="${SITEROOT}/sites/default"
-cd "${DEFAULTFILES}"
+cd "${OLDFILES}"
+if [ -d "private" ]; then
+  error_exit "Private files directory already exists! ${OLDFILES}"
+fi
+cd "${NEWBASE}"
 if [ -d "files" ]; then
-  error_exit "Default files directory already exists in $DEFAULTFILES"
+  error_exit "Default files directory already exists in ${NEWBASE}"
 fi
-FILESDIR="${MULTISITEROOT}/files"
-ln -s "${FILESDIR}" "files"
-PRIVATEDIRSYMLINK="${FILESDIR}/private/files"
-if [ -d "$PRIVATEDIRSYMLINK" ]; then
-  error_exit "Private files directory already exists! $PRIVATEDIRSYMLINK"
-fi
-cd "$FILESDIR"
-ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
+cd "${OLDFILES}"
+ln -s "${OLDPRIVATE}" private
+cd "${NEWBASE}"
+ln -s "${OLDFILES}" files
 
-error_exit "See if symlinks are setup: ${DEFAULTFILES}"
+error_exit "See if symlinks are setup: ${NEWBASE}"
 
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
 ARDFILE="${EXPORTDIR}/archive.tar.gz"
 drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
-# delete the temporary symlink
+# delete the temporary symlinks
 echo "Unlinking private files..."
 rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATEDIRSYMLINK"
 
