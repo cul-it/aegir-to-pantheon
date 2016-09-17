@@ -100,7 +100,12 @@ rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/priva
 rm "${NEWBASE}/files" || error_exit "Can not remove symlink ${NEWBASE}/files"
 rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/settings.php"
 
-error_exit "quitting: ${ARDFILE}"
+# uncompress archive to access MANIFEST
+echo "Adding database dump to archive MANIFEST.ini..."
+cd "${EXPORTDIR}"
+tar -zxvf archive.tar.gz
+
+error_exit "quitting: ${EXPORTDIR}"
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
