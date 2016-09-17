@@ -86,8 +86,9 @@ ln -s "${OLDFILES}" files || error_exit "Problem creating files symlink"
 ln -s "${OLDBASE}/settings.php" settings.php || error_exit "Problem creating symlink for settings.php"
 
 # make a drush archive dump of the site, including private files via the symlink
+# no .tar.gz extension will not run mainfest through tar
 echo "Making site archive..."
-ARDFILE="${EXPORTDIR}/archive.tar.gz"
+ARDFILE="${EXPORTDIR}/archive"
 sudo -u aegir drush "$TARGET_SITE_ALIAS" archive-dump default --destination="${ARDFILE}" || error_exit "Problem making drush archive."
 
 # reset permissions
