@@ -103,7 +103,13 @@ rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/se
 # uncompress archive to access MANIFEST
 echo "Adding database dump to archive MANIFEST.ini..."
 cd "${EXPORTDIR}"
-tar -zxvf archive.tar.gz
+tar -zxvf archive.tar.gz -C archive
+rm archive.tar.gz
+mv database-default-site.sql archive/
+echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
+echo 'database-default-driver = "mysql"' >> archive/MANIFEST.ini
+tar -zcvf archive.tar.gz archive
+rm -r archive
 
 error_exit "quitting: ${EXPORTDIR}"
 
