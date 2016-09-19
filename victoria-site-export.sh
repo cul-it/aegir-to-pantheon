@@ -100,5 +100,5 @@ rm -r "$EXPORTDIR"
 
 echo "********************"
 echo "Archive stored here:"
-echo "https://s3.amazonaws.com/${bucket}/${TARGET_SITE}/archive.tar.gz"
+echo "https://s3.amazonaws.com/${BUCKET}/${TARGET_SITE}/archive.tar.gz"
 echo "********************"
