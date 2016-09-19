@@ -27,7 +27,7 @@ fi
 # find the path to the site and the multi-site directories
 SITEROOT=`drush sa "$TARGET_SITE_ALIAS" | grep root | cut -f4 -d\'`
 
-PRIVATEFILESPATH="/libweb/sites/${TARGET_SITE}/drupal_files/"
+PRIVATEFILESPATH="/libweb/sites/${TARGET_SITE}/drupal_files"
 
 # create a temporary directory target for backup
 TEMP="/tmp/victoria-site-export"
