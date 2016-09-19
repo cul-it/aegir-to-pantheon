@@ -110,7 +110,7 @@ mv database-default-site.sql archive/
 echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
 echo 'database-default-driver = "mysql"' >> archive/MANIFEST.ini
 tar -zcvf archive.tar.gz archive || error_exit "Problem compressing"
-rm -r archive
+rm -rf archive
 
 error_exit "quitting: ${EXPORTDIR}"
 
