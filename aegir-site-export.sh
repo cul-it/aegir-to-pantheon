@@ -112,8 +112,6 @@ echo 'database-default-driver = "mysql"' >> archive/MANIFEST.ini
 tar -zcf archive.tar.gz archive || error_exit "Problem compressing"
 rm -rf archive
 
-error_exit "quitting: ${EXPORTDIR}"
-
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
 if test $FILESIZE -ge "524288000"
