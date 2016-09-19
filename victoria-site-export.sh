@@ -76,6 +76,7 @@ OLDNAME="../drupal_files"
 NEWNAME="sites/default/files/private"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASEDUMP}" || error_exit "Problem replacing private files path in ${DATABASEDUMP}."
 cd "${EXPORTDIR}"
+echo "Re-compressing site archive..."
 tar -zcf archive.tar.gz archive || error_exit "Problem compressing"
 rm -rf archive
 
