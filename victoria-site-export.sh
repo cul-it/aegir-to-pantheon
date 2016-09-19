@@ -68,7 +68,7 @@ rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATE
 echo "Adjusting private files paths in database dump..."
 cd "${EXPORTDIR}"
 mkdir archive
-tar -zxvf archive.tar.gz -C archive || error_exit "Can not decompress archive"
+tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
 rm archive.tar.gz
 error_exit("quitting here with uncompressed archive: ${EXPORTDIR}")
 OLDNAME="sites/${TARGET_SITE}"
