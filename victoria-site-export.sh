@@ -77,7 +77,7 @@ NEWNAME="sites/default/files/private"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASEDUMP}" || error_exit "Problem replacing private files path in ${DATABASEDUMP}."
 cd "${EXPORTDIR}"
 tar -zcvf archive.tar.gz archive || error_exit "Problem compressing"
-rm -r archive
+rm -rf archive
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
