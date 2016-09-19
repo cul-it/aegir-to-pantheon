@@ -33,7 +33,16 @@ https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.t
 `
 
 ### Exporting from Victorias
-* use victoria-site-export.sh
+* ssh over to victoria01.library.cornell.edu
+* run this script with your site name:
+`
+/usr/local/bin/victoria-site-export.sh sitename.library.cornell.edu
+`
+* make note of where the export is stored:
+`
+https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
+`
+
 
 ## Import into a new Pantheon site
 
