@@ -53,7 +53,7 @@ if [ -d "$PRIVATEDIRSYMLINK" ]; then
   error_exit "Private files directory already exists! $PRIVATEDIRSYMLINK"
 fi
 cd "$FILESDIR"
-ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
+ln -s "${PRIVATEFILESPATH}" "private" || error_exit "Can not make symlink to private files"
 
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
