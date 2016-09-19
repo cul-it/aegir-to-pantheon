@@ -100,6 +100,20 @@ rm "${OLDFILES}/private" || error_exit "Can not remove symlink ${OLDFILES}/priva
 rm "${NEWBASE}/files" || error_exit "Can not remove symlink ${NEWBASE}/files"
 rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/settings.php"
 
+# uncompress archive to access MANIFEST
+echo "Adding database dump to archive MANIFEST.ini..."
+cd "${EXPORTDIR}"
+mkdir archive
+tar -zxvf archive.tar.gz -C archive || error_exit "Can not decompress archive"
+rm archive.tar.gz
+mv database-default-site.sql archive/
+echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
+echo 'database-default-driver = "mysql"' >> archive/MANIFEST.ini
+tar -zcvf archive.tar.gz archive || error_exit "Problem compressing"
+rm -r archive
+
+error_exit "quitting: ${EXPORTDIR}"
+
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
 if test $FILESIZE -ge "524288000"
