@@ -35,4 +35,10 @@ https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.t
 ### Exporting from Victorias
 * use victoria-site-export.sh
 
-## Replace local git repo's /sites/all with yours
+## Import into a new Pantheon site
+
+## Import into an existing Pantheon site
+* Install terminus
+ * https://github.com/pantheon-systems/terminus/blob/master/README.md#installation
+ * I had better luck with the Homebrew installation on Mac OSX than with composer.
+
