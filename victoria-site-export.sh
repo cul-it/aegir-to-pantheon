@@ -64,6 +64,22 @@ drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit
 echo "Unlinking private files..."
 rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATEDIRSYMLINK"
 
+# uncompress archive to access database dump
+echo "Adjusting private files paths in database dump..."
+cd "${EXPORTDIR}"
+mkdir archive
+tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
+rm archive.tar.gz
+cd archive
+DATABASEDUMP=`grep database-default-file MANIFEST.ini | cut -f2 -d\"`
+OLDNAME="../drupal_files"
+NEWNAME="sites/default/files/private"
+sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASEDUMP}" || error_exit "Problem replacing private files path in ${DATABASEDUMP}."
+cd "${EXPORTDIR}"
+echo "Re-compressing site archive..."
+tar -zcf archive.tar.gz archive || error_exit "Problem compressing"
+rm -rf archive
+
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
 if test $FILESIZE -ge "524288000"
@@ -72,7 +88,7 @@ if test $FILESIZE -ge "524288000"
 fi
 
 # upload to amazon s3
-echo "Uploade archive to Amazon S3"
+echo "Uploade archive to Amazon S3..."
 command -v aws >/dev/null 2>&1 || error_exit "Problem: aws command is not installed."
 BUCKET="pantheon-imports"
 cd "$TEMP"
