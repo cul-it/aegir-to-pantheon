@@ -70,7 +70,7 @@ cd "${EXPORTDIR}"
 mkdir archive
 tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
 rm archive.tar.gz
-error_exit("quitting here with uncompressed archive: ${EXPORTDIR}")
+error_exit "quitting here with uncompressed archive: ${EXPORTDIR}"
 OLDNAME="sites/${TARGET_SITE}"
 NEWNAME="sites/default"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
