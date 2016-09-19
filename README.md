@@ -5,9 +5,6 @@ Updated: 9/14/2016 jgr25
 ## First time only
 * Install drush
  * http://docs.drush.org/en/master/install/
-* Install terminus
- * https://github.com/pantheon-systems/terminus/blob/master/README.md#installation
- * I had better luck with the Homebrew installation on Mac OSX than with composer.
 
 ## Differences between our setup and Pantheon's
 * Files Paths
