@@ -29,7 +29,7 @@ Updated: 9/19/2016 jgr25
 `
 * make note of where the export is stored:
 `
-/tmp/aegir-site-export/sitename.library.cornell.edu/export.tar.gz
+https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
 `
 
 ### Exporting from Victorias
