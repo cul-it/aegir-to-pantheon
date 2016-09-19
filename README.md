@@ -35,19 +35,34 @@ https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.t
 ### Exporting from Victorias
 * ssh over to victoria01.library.cornell.edu
 * run this script with your site name:
+
 `
 /usr/local/bin/victoria-site-export.sh sitename.library.cornell.edu
 `
+
 * make note of where the export is stored:
+
 `
 https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
 `
 
 
 ## Import into a new Pantheon site
+* Follow the first steps for [Guided Migration](https://pantheon.io/docs/migrate/#guided-migration)
+* **SKIP the step called "Create an Archive of Your Existing Site With Drush"** - just click on the button "Continue Migration"
+* When you get to the step "Import Site Archive", choose the "URL" method, and enter the Amazon s3 path of your site export from above, (something like https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz), and click "Import Archive"
+* Watch as "We're Migrating Your Site to Pantheon!" displays
 
 ## Import into an existing Pantheon site
-* Install terminus
+* Install terminus onto your own laptop
  * https://github.com/pantheon-systems/terminus/blob/master/README.md#installation
  * I had better luck with the Homebrew installation on Mac OSX than with composer.
+* Find the Pantheon name of your site in the Name column after running:
 
+`terminus sites show
+`
+
+* Run the terminus site archive import command
+
+`terminus site import --site=sitenamelibrarycornelledu --url=https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
+`
