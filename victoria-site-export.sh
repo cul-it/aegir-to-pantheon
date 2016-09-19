@@ -70,13 +70,12 @@ cd "${EXPORTDIR}"
 mkdir archive
 tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
 rm archive.tar.gz
-error_exit "quitting here with uncompressed archive: ${EXPORTDIR}"
-OLDNAME="sites/${TARGET_SITE}"
-NEWNAME="sites/default"
-sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
+DATABASEDUMP=`grep database-default-file MANIFEST.ini | cut -f2 -d\"`
+OLDNAME="../drupal_files"
+NEWNAME="sites/default/files/private"
+sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASEDUMP}" || error_exit "Problem replacing private files path in ${DATABASEDUMP}."
 tar -zcvf archive.tar.gz archive || error_exit "Problem compressing"
 rm -r archive
-
 
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
