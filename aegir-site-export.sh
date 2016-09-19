@@ -104,7 +104,7 @@ rm "${NEWBASE}/settings.php" || error_exit "Can not remove symlink ${NEWBASE}/se
 echo "Adding database dump to archive MANIFEST.ini..."
 cd "${EXPORTDIR}"
 mkdir archive
-tar -zxvf archive.tar.gz -C archive || error_exit "Can not decompress archive"
+tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
 rm archive.tar.gz
 mv database-default-site.sql archive/
 echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
