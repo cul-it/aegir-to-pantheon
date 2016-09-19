@@ -1,28 +1,21 @@
-# Move Aegir site to Pantheon
+# Move Aegir or Victoria site to Pantheon
 
-Updated: 9/14/2016 jgr25
-
-## First time only
-* Install drush
- * http://docs.drush.org/en/master/install/
+Updated: 9/19/2016 jgr25
 
 ## Differences between our setup and Pantheon's
 * Files Paths
  * Pantheon
-	  * [site-root]/sites/default/files
-	  * [site-root]/sites/default/files/private
+	  * public files here: [site-root]/sites/default/files
+	  * private files here: [site-root]/sites/default/files/private
+	  * Pantheon has a designated spot for temp files, and ignores imported temp files settings
  * Aegir
-	  * [site-root]/sites/[site-name]/files
-	  * [site-root]/sites/[site-name]/private/files
+	  * public files here: [site-root]/sites/[site-name]/files
+	  * private files here: [site-root]/sites/[site-name]/private/files
  * Victorias
-	  * [site-root]/sites/default/files
-	  * [site-root]/../drupal_files
+	  * public files here: [site-root]/sites/default/files
+	  * private files here: [site-root]/../drupal_files
 * No Multi-Site
 * No support for Drupal 6 sites
-
-## Make an empty site on Pantheon
-
-## Make a local git repo of the Pantheon site
 
 ## Export your Drupal site
 
