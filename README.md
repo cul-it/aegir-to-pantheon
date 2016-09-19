@@ -17,6 +17,15 @@ Updated: 9/19/2016 jgr25
 * No Multi-Site
 * No support for Drupal 6 sites
 
+## Before you export
+* Disable Simple SAML
+	* it is not working on Pantheon yet
+	* disable the feature "SimpleSAML Authentication for CUL"
+	* disable the module "simpleSAMLphp authentication"
+* Move a clone of your Aegir site to the dev server
+	* we can access all the parts of the site on lamp-stg but not lamp-prod
+	* move the clone to Pantheon from lamp-stg
+
 ## Export your Drupal site
 
 ### Exporting from Aegir
@@ -45,7 +54,6 @@ https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.t
 `
 https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
 `
-
 
 ## Import into a new Pantheon site
 * Follow the first steps for [Guided Migration](https://pantheon.io/docs/migrate/#guided-migration)
