@@ -92,9 +92,9 @@ echo "Uploade archive to Amazon S3..."
 command -v aws >/dev/null 2>&1 || error_exit "Problem: aws command is not installed."
 BUCKET="pantheon-imports"
 cd "$TEMP"
-aws s3 sync "${TARGET_SITE}" "s3://${BUCKET}/${TARGET_SITE}" || error_exit "Problem with aws sync"
 
-error_exit " quit: aws s3 sync ${TARGET_SITE} s3://${BUCKET}/${TARGET_SITE}"
+error_exit " quit: $TEMP aws s3 sync ${TARGET_SITE} s3://${BUCKET}/${TARGET_SITE}"
+aws s3 sync "${TARGET_SITE}" "s3://${BUCKET}/${TARGET_SITE}" || error_exit "Problem with aws sync"
 
 # remove temp archive
 echo "Cleaning up temp archive..."
