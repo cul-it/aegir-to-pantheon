@@ -64,6 +64,20 @@ drush "$TARGET_SITE_ALIAS" archive-dump --destination="${ARDFILE}" || error_exit
 echo "Unlinking private files..."
 rm "$PRIVATEDIRSYMLINK" || error_exit "Can not remove temporary symlink $PRIVATEDIRSYMLINK"
 
+# uncompress archive to access database dump
+echo "Adjusting private files paths in database dump..."
+cd "${EXPORTDIR}"
+mkdir archive
+tar -zxvf archive.tar.gz -C archive || error_exit "Can not decompress archive"
+rm archive.tar.gz
+error_exit("quitting here with uncompressed archive: ${EXPORTDIR}")
+OLDNAME="sites/${TARGET_SITE}"
+NEWNAME="sites/default"
+sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
+tar -zcvf archive.tar.gz archive || error_exit "Problem compressing"
+rm -r archive
+
+
 # if the archive dump is < 500mb we can use it
 FILESIZE=`stat --printf='%s' "${ARDFILE}"`
 if test $FILESIZE -ge "524288000"
@@ -72,7 +86,7 @@ if test $FILESIZE -ge "524288000"
 fi
 
 # upload to amazon s3
-echo "Uploade archive to Amazon S3"
+echo "Uploade archive to Amazon S3..."
 command -v aws >/dev/null 2>&1 || error_exit "Problem: aws command is not installed."
 BUCKET="pantheon-imports"
 cd "$TEMP"
