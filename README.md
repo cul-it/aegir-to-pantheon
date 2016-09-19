@@ -1,31 +1,21 @@
-# Move Aegir site to Pantheon
+# Move Aegir or Victoria site to Pantheon
 
-Updated: 9/14/2016 jgr25
-
-## First time only
-* Install drush
- * http://docs.drush.org/en/master/install/
-* Install terminus
- * https://github.com/pantheon-systems/terminus/blob/master/README.md#installation
- * I had better luck with the Homebrew installation on Mac OSX than with composer.
+Updated: 9/19/2016 jgr25
 
 ## Differences between our setup and Pantheon's
 * Files Paths
  * Pantheon
-	  * [site-root]/sites/default/files
-	  * [site-root]/sites/default/files/private
+	  * public files here: [site-root]/sites/default/files
+	  * private files here: [site-root]/sites/default/files/private
+	  * Pantheon has a designated spot for temp files, and ignores imported temp files settings
  * Aegir
-	  * [site-root]/sites/[site-name]/files
-	  * [site-root]/sites/[site-name]/private/files
+	  * public files here: [site-root]/sites/[site-name]/files
+	  * private files here: [site-root]/sites/[site-name]/private/files
  * Victorias
-	  * [site-root]/sites/default/files
-	  * [site-root]/../drupal_files
+	  * public files here: [site-root]/sites/default/files
+	  * private files here: [site-root]/../drupal_files
 * No Multi-Site
 * No support for Drupal 6 sites
-
-## Make an empty site on Pantheon
-
-## Make a local git repo of the Pantheon site
 
 ## Export your Drupal site
 
@@ -39,10 +29,40 @@ Updated: 9/14/2016 jgr25
 `
 * make note of where the export is stored:
 `
-/tmp/aegir-site-export/sitename.library.cornell.edu/export.tar.gz
+https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
 `
 
 ### Exporting from Victorias
-* use victoria-site-export.sh
+* ssh over to victoria01.library.cornell.edu
+* run this script with your site name:
 
-## Replace local git repo's /sites/all with yours
+`
+/usr/local/bin/victoria-site-export.sh sitename.library.cornell.edu
+`
+
+* make note of where the export is stored:
+
+`
+https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
+`
+
+
+## Import into a new Pantheon site
+* Follow the first steps for [Guided Migration](https://pantheon.io/docs/migrate/#guided-migration)
+* **SKIP the step called "Create an Archive of Your Existing Site With Drush"** - just click on the button "Continue Migration"
+* When you get to the step "Import Site Archive", choose the "URL" method, and enter the Amazon s3 path of your site export from above, (something like https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz), and click "Import Archive"
+* Watch as "We're Migrating Your Site to Pantheon!" displays
+
+## Import into an existing Pantheon site
+* Install terminus onto your own laptop
+ * https://github.com/pantheon-systems/terminus/blob/master/README.md#installation
+ * I had better luck with the Homebrew installation on Mac OSX than with composer.
+* Find the Pantheon name of your site in the Name column after running:
+
+`terminus sites show
+`
+
+* Run the terminus site archive import command
+
+`terminus site import --site=sitenamelibrarycornelledu --url=https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
+`
