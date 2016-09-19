@@ -27,7 +27,7 @@ fi
 # find the path to the site and the multi-site directories
 SITEROOT=`drush sa "$TARGET_SITE_ALIAS" | grep root | cut -f4 -d\'`
 
-PRIVATEFILESPATH="/libweb/sites/${TARGET_SITE}/drupal_files/"
+PRIVATEFILESPATH="/libweb/sites/${TARGET_SITE}/drupal_files"
 
 # create a temporary directory target for backup
 TEMP="/tmp/victoria-site-export"
@@ -53,7 +53,7 @@ if [ -d "$PRIVATEDIRSYMLINK" ]; then
   error_exit "Private files directory already exists! $PRIVATEDIRSYMLINK"
 fi
 cd "$FILESDIR"
-ln -s "$PRIVATEFILESPATH" "private" || error_exit "Can not make symlink to private files"
+ln -s "${PRIVATEFILESPATH}" "private" || error_exit "Can not make symlink to private files"
 
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
@@ -92,7 +92,7 @@ echo "Uploade archive to Amazon S3..."
 command -v aws >/dev/null 2>&1 || error_exit "Problem: aws command is not installed."
 BUCKET="pantheon-imports"
 cd "$TEMP"
-aws s3 sync "${TARGET_SITE}" "s3:${BUCKET}" || "Problem with aws sync"
+aws s3 sync "${TARGET_SITE}" "s3://${BUCKET}/${TARGET_SITE}" || error_exit "Problem with aws sync"
 
 # remove temp archive
 echo "Cleaning up temp archive..."
@@ -100,5 +100,5 @@ rm -r "$EXPORTDIR"
 
 echo "********************"
 echo "Archive stored here:"
-echo "https://s3.amazonaws.com/${bucket}/${TARGET_SITE}/archive.tar.gz"
+echo "https://s3.amazonaws.com/${BUCKET}/${TARGET_SITE}/archive.tar.gz"
 echo "********************"
