@@ -70,10 +70,12 @@ cd "${EXPORTDIR}"
 mkdir archive
 tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
 rm archive.tar.gz
+cd archive
 DATABASEDUMP=`grep database-default-file MANIFEST.ini | cut -f2 -d\"`
 OLDNAME="../drupal_files"
 NEWNAME="sites/default/files/private"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASEDUMP}" || error_exit "Problem replacing private files path in ${DATABASEDUMP}."
+cd "${EXPORTDIR}"
 tar -zcvf archive.tar.gz archive || error_exit "Problem compressing"
 rm -r archive
 
