@@ -79,3 +79,8 @@ https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.t
 
 `terminus site import --site=sitenamelibrarycornelledu --url=https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.tar.gz
 `
+
+## Once the site is on Pantheon
+* get rid of any /sites/sites.php file (for multi-site only)
+* overwrite /sites/default/settings.php with the Pantheon version of /sites/default/default.settings.php 
+* check the Status page in the Pantheon environments for other suggestions - usually caching and cleaning up unused modules
