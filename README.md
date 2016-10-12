@@ -16,6 +16,11 @@ Updated: 9/19/2016 jgr25
 	  * private files here: [site-root]/../drupal_files
 * No Multi-Site
 * No support for Drupal 6 sites
+* settings.php
+	* aegir puts a lot of configuration specific stuff in settings.php
+	* it's quite likely that existing settings.php files are somewhat out of date
+	* Pantheon's Status > Launch Check feature complains about "Fast 404 pages". The fixes for this are placed in settings.php
+	* Pantheon's settings.php file does *NOT* contain the database connection information
 
 ## Before you export
 * Disable Simple SAML
