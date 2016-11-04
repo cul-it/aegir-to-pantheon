@@ -31,6 +31,11 @@ Updated: 9/19/2016 jgr25
 * Move a clone of your Aegir site to the dev server
 	* we can access all the parts of the site on lamp-stg but not lamp-prod
 	* move the clone to Pantheon from lamp-stg
+* get rid of any extra database dumps - it will confuse Pantheon
+  * check /private
+  * check /backup_migrate
+  * check /droppings
+  * remove any .sql, .sql.tar.gz, .sql.bak
 
 ## Export your Drupal site
 
