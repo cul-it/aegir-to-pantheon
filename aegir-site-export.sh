@@ -108,7 +108,8 @@ tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
 rm archive.tar.gz
 
 # get rid of any existing database dumps in the archive
-find ./archive/*/sites/default/files/ \( -name "*.mysql.gz" -o -name "*.mysql.gz.info" -o -name "*.sql" -o -name "*.sql.bak" \) -type f
+echo "Removing extra database dump files from archive..."
+find ./archive/*/sites/default/files/ -ls \( -name "*.mysql.gz" -o -name "*.mysql.gz.info" -o -name "*.sql" -o -name "*.sql.bak" \) -type f
 pwd
 exit 0
 
