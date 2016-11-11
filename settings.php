@@ -18,6 +18,7 @@
 // Require HTTPS.
 // Check if Drupal is running via command line
 if (isset($_SERVER['PANTHEON_ENVIRONMENT']) &&
+  (isset($_SERVER['HTTPS'])) &&
   ($_SERVER['HTTPS'] === 'OFF') &&
   (php_sapi_name() != "cli")) {
   if (!isset($_SERVER['HTTP_X_SSL']) ||
