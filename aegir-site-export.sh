@@ -106,6 +106,12 @@ cd "${EXPORTDIR}"
 mkdir archive
 tar -zxf archive.tar.gz -C archive || error_exit "Can not decompress archive"
 rm archive.tar.gz
+
+# get rid of any existing database dumps in the archive
+find ./archive \( -name "*.mysql.gz" -o -name "*.mysql.gz.info" -o -name "*.sql" -o -name "*.sql.bak" \) -type f
+pwd
+exit 0
+
 mv database-default-site.sql archive/
 echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
 echo 'database-default-driver = "mysql"' >> archive/MANIFEST.ini
