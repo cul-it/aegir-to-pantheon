@@ -137,3 +137,12 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
  // $conf['pantheon_apachesolr_schema'] = 'sites/all/modules/contrib/apachesolr/solr-conf/solr-3.x/schema.xml';
  // $conf['pantheon_apachesolr_schema'] = 'sites/all/modules/contrib/search_api_solr/solr-conf/solr-3.x/schema.xml';
 }
+
+/**
+ * support for simplesamlphp
+ * see
+ */
+if (!empty($_SERVER['PRESSFLOW_SETTINGS'])) {
+  $ps = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
+  $conf['simplesamlphp_auth_installdir'] = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp';
+}
