@@ -121,6 +121,20 @@ if (defined('PANTHEON_ENVIRONMENT')) {
     # Replace value with custom domain(s) added in the site Dashboard
     $settings['trusted_host_patterns'][] = '^.+\.library.cornell\.edu$';
     $settings['trusted_host_patterns'][] = '^library.cornell\.edu$';
+
+    /**
+     * support for simplesamlphp
+     * see https://github.com/cul-it/simplesamlphp-pantheon
+     */
+    if (!empty($_SERVER['PRESSFLOW_SETTINGS'])) {
+      $ps = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
+      if ($_ENV['PANTHEON_ENVIRONMENT'] == 'live') {
+        $conf['simplesamlphp_auth_installdir'] = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp-pantheon-prod';
+      }
+      else {
+        $conf['simplesamlphp_auth_installdir'] = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp-pantheon-test';
+      }
+    }
   }
 }
 
@@ -138,11 +152,4 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
  // $conf['pantheon_apachesolr_schema'] = 'sites/all/modules/contrib/search_api_solr/solr-conf/solr-3.x/schema.xml';
 }
 
-/**
- * support for simplesamlphp
- * see
- */
-if (!empty($_SERVER['PRESSFLOW_SETTINGS'])) {
-  $ps = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
-  $conf['simplesamlphp_auth_installdir'] = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp';
-}
+
