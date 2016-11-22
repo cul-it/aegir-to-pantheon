@@ -21,7 +21,7 @@ Updated: 9/19/2016 jgr25
 	* it's quite likely that existing settings.php files are somewhat out of date
 	* Pantheon's Status > Launch Check feature complains about "Fast 404 pages". The fixes for this are placed in settings.php
 	* Pantheon's settings.php file does *NOT* contain the database connection information
-	* see the example settings.php file here
+	* see the example settings.php file here: https://github.com/cul-it/pantheon-settings
 
 ## Before you export
 * Disable Simple SAML
@@ -85,5 +85,5 @@ https://s3.amazonaws.com/pantheon-imports/sitename.library.cornell.edu/archive.t
 
 ## Once the site is on Pantheon
 * get rid of any /sites/sites.php file (for multi-site only)
-* overwrite /sites/default/settings.php with the Pantheon version of /sites/default/default.settings.php
+* overwrite /sites/default/settings.php with the CUL version https://github.com/cul-it/pantheon-settings
 * check the Status page in the Pantheon environments for other suggestions - usually caching and cleaning up unused modules
