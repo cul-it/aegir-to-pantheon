@@ -2,7 +2,7 @@
 
 Updated: 9/19/2016 jgr25
 
-## Differences between our setup and Pantheon's
+## Differences between our setups and Pantheon's
 * Files Paths
  * Pantheon
 	  * public files here: [site-root]/sites/default/files
@@ -22,17 +22,6 @@ Updated: 9/19/2016 jgr25
 	* Pantheon's Status > Launch Check feature complains about "Fast 404 pages". The fixes for this are placed in settings.php
 	* Pantheon's settings.php file does *NOT* contain the database connection information
 	* see the example settings.php file here: https://github.com/cul-it/pantheon-settings
-
-## Before you export
-* Disable Simple SAML
-	* it is not working on Pantheon yet
-	* disable the feature "SimpleSAML Authentication for CUL"
-	* disable the module "simpleSAMLphp authentication"
-* Move a clone of your Aegir site to the dev server
-	* we can access all the parts of the site on lamp-stg but not lamp-prod
-	* move the clone to Pantheon from lamp-stg
-* the script will get rid of any extra database dumps in the archive
-	* extra database dumps causes the Pantheon import script to fail
 
 ## Export your Drupal site
 

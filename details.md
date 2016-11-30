@@ -10,6 +10,9 @@
 
 ## Gotcha
 * site archive files need to be web accessible to be imported into Pantheon
+* the migrate scripts will get rid of any extra database dumps in the archive
+	* extra database dumps causes the Pantheon import script to fail
+
 
 ## Dealing with private files
 * different layouts for private files directory Pantheon, Aegir, Victorias
