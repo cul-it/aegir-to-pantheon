@@ -58,6 +58,10 @@ echo 'Converting private files paths...'
 OLDNAME="sites/default/private/files"
 NEWNAME="sites/default/files/private"
 sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem replacing multi-site path."
+# fix relative paths in the sql dump file
+# /files/bla... becomes /sites/default/files/bla...
+echo "Cleaning up relative file paths in sql dump..."
+sed -i.bak "s|\"/files/|\"/sites/default/files/|g" "${DATABASE}" || error_exit "Problem Cleaning up relative file paths."
 
 # make symlink to multisite files in files directory (temporarily)
 echo "Linking in multisite & private files..."
@@ -110,12 +114,6 @@ rm archive.tar.gz
 # get rid of any existing database dumps in the archive
 echo "Removing extra database dump files from archive..."
 find ./archive/*/sites/default/files/ \( -name "*.mysql.gz" -o -name "*.mysql.gz.info" -o -name "*.sql" -o -name "*.sql.bak" \) -type f -ls -delete
-
-# fix relative paths in the sql dump file
-# /files/bla... becomes /sites/default/files/bla...
-echo "Cleaning up file paths in sql dump..."
-echo 'sed -i.bak "s|\"/files/|\"/sites/default/files/|g" database-default-site.sql'
-sed -i.bak "s|\"/files/|\"/sites/default/files/|g" database-default-site.sql
 
 mv database-default-site.sql archive/
 echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
