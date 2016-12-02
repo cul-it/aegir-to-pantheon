@@ -114,10 +114,8 @@ find ./archive/*/sites/default/files/ \( -name "*.mysql.gz" -o -name "*.mysql.gz
 # fix relative paths in the sql dump file
 # /files/bla... becomes /sites/default/files/bla...
 echo "Cleaning up file paths in sql dump..."
-OLDPATT="\"/files/";
-NEWPATT="\"/sites/default/files/";
-echo "sed -i.bak 's/${OLDPATT}/${NEWPATT}/g' database-default-site.sql"
-sed -i.bak "s/${OLDPATT}/${NEWPATT}/g" database-default-site.sql
+echo 'sed -i.bak "s|\"/files/|\"/sites/default/files/|g" database-default-site.sql'
+sed -i.bak "s|\"/files/|\"/sites/default/files/|g" database-default-site.sql
 
 mv database-default-site.sql archive/
 echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
