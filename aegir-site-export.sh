@@ -61,7 +61,7 @@ sed -i -e "s#${OLDNAME}#${NEWNAME}#g" "${DATABASE}" || error_exit "Problem repla
 # fix relative paths in the sql dump file
 # /files/bla... becomes /sites/default/files/bla...
 echo "Cleaning up relative file paths in sql dump..."
-sed -i.bak "s|\"/files/|\"/sites/default/files/|g" "${DATABASE}" || error_exit "Problem Cleaning up relative file paths."
+sed -i -e "s|\"/files/|\"/sites/default/files/|g" "${DATABASE}" || error_exit "Problem cleaning up relative file paths."
 
 # make symlink to multisite files in files directory (temporarily)
 echo "Linking in multisite & private files..."
