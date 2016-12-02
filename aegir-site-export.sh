@@ -111,6 +111,14 @@ rm archive.tar.gz
 echo "Removing extra database dump files from archive..."
 find ./archive/*/sites/default/files/ \( -name "*.mysql.gz" -o -name "*.mysql.gz.info" -o -name "*.sql" -o -name "*.sql.bak" \) -type f -ls -delete
 
+# fix relative paths in the sql dump file
+# /files/bla... becomes /sites/default/files/bla...
+echo "Cleaning up file paths in sql dump..."
+OLDPATT="\"/files/";
+NEWPATT="\"/sites/default/files/";
+echo "sed -i.bak 's/${OLDPATT}/${NEWPATT}/g' database-default-site.sql"
+sed -i.bak "s/${OLDPATT}/${NEWPATT}/g" database-default-site.sql
+
 mv database-default-site.sql archive/
 echo 'database-default-file = "database-default-site.sql"' >> archive/MANIFEST.ini
 echo 'database-default-driver = "mysql"' >> archive/MANIFEST.ini
