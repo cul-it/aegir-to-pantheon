@@ -25,8 +25,7 @@ if [ $# -ne 1 ]; then
 fi
 
 # find the path to the site and the multi-site directories
-SITEROOT=`drush sa "$TARGET_SITE_ALIAS" | grep root | cut -f4 -d\'`
-
+SITEROOT="/libweb/sites/${TARGET_SITE}/htdocs"
 PRIVATEFILESPATH="/libweb/sites/${TARGET_SITE}/drupal_files"
 
 # create a temporary directory target for backup
