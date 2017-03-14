@@ -21,14 +21,14 @@ function useage
 
 HOST=`hostname`
 if [ "$HOST" = 'sf-lib-web-011.serverfarm.cornell.edu' ]; then
-  echo 'Yes you are on the right machine. lamp-legacy'
+  echo 'Yes you are on the right machine. lamp-legacy aka sf-lib-web-011.serverfarm.cornell.edu'
 else
   error_exit "This must be run on lamp-legacy aka sf-lib-web-011.serverfarm.cornell.edu"
 fi
 
 # find the path to the site and the multi-site directories
 SITEROOT="/cul/web/${TARGET_SITE}/htdocs"
-# PRIVATEFILESPATH="/cul/web/${TARGET_SITE}/drupal_files"
+PRIVATEFILESPATH="/cul/web/${TARGET_SITE}/drupal_files"
 
 # create a temporary directory target for backup
 TEMP="/tmp/victoria-site-export"
@@ -54,7 +54,7 @@ if [ -d "$PRIVATEDIRSYMLINK" ]; then
   error_exit "Private files directory already exists! $PRIVATEDIRSYMLINK"
 fi
 cd "$FILESDIR"
-# ln -s "${PRIVATEFILESPATH}" "private" || error_exit "Can not make symlink to private files"
+ln -s "${PRIVATEFILESPATH}" "private" || error_exit "Can not make symlink to private files"
 
 # make a drush archive dump of the site, including private files via the symlink
 echo "Making site archive..."
