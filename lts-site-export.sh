@@ -31,7 +31,7 @@ SITEROOT="/cul/web/${TARGET_SITE}/htdocs"
 PRIVATEFILESPATH="/cul/web/${TARGET_SITE}/drupal_files"
 
 # create a temporary directory target for backup
-TEMP="/tmp/victoria-site-export"
+TEMP="/tmp/lts-site-export"
 TEMPDIR="${TEMP}/${TARGET_SITE}"
 EXPORTDIR="${TEMPDIR}"
 if [ -d "$EXPORTDIR" ]; then
